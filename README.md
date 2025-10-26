@@ -17,3 +17,4 @@ A Flutter-based Pokedex app that utilizes the [PokeAPI](https://pokeapi.co/docs/
 
 ## 📌 Notes
 This project was created as a practice app to explore flutter clean architecture and riverpod.
+Flutter version: 3.35.1
