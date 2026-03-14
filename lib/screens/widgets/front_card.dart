@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FrontCard extends StatefulWidget {
-  const FrontCard({super.key, required this.image, required this.number});
+  const FrontCard({super.key, required this.image, required this.name});
 
   final String image;
-  final String number;
+  final String name;
 
   @override
   State<StatefulWidget> createState() => _FrontCard();
@@ -27,8 +27,8 @@ class _FrontCard extends State<FrontCard> {
               color: Color(0xFF0C1670),
               child: Center(
                 child: Text(
-                  widget.number.toString(),
-                  style: TextStyle(
+                  widget.name.toUpperCase(),
+                  style: GoogleFonts.bitcountPropDouble(
                     fontSize: 30,
                     fontWeight: .bold,
                     color: Colors.white,
@@ -42,12 +42,12 @@ class _FrontCard extends State<FrontCard> {
             flex: 3,
             child: Container(
               width: .infinity,
-              color: Colors.white,
+              color: Color(0xFF0C1670),
               child: Column(
                 mainAxisAlignment: .center,
                 children: [
                   const SizedBox(height: 10),
-                  Flexible(child: SvgPicture.network(widget.image, width: 200)),
+                  Flexible(child: Image.network(widget.image)),
                   const SizedBox(height: 10),
                 ],
               ),

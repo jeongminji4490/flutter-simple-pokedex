@@ -11,24 +11,8 @@ class BackCard extends StatefulWidget {
 
 class _BackCard extends State<BackCard> {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const .all(10),
-      decoration: BoxDecoration(
-        color: Color(0xFF0C1670),
-        borderRadius: .circular(10),
-      ),
-      child: Center(
-        child: Text(
-          widget.name.toUpperCase(),
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: .bold,
-            color: Colors.white,
-            decoration: .none,
-          ),
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Padding(
+    padding: .all(10),
+    child: Image.asset('assets/pokedex_card.png', fit: BoxFit.fill),
+  );
 }

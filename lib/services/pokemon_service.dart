@@ -22,7 +22,13 @@ class PokemonRepository {
     final response = await service.getPokemonImage(id);
     return Pokemon(
       name: response.form.name,
-      image: response.sprites.other.dreamWorld.frontDefault,
+      image: response
+          .sprites
+          .versions
+          .generationV
+          .blackWhite
+          .animated
+          .frontDefault,
     );
   }
 }

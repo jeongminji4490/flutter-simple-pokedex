@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex_riverpod/presentation/pages/logo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pokedex_riverpod/screens/first_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pokedex',
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           outline: Color(0xFF0C1670),
         ),
       ),
-      home: Main(),
+      home: const FirstPage(),
     );
   }
 }

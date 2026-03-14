@@ -44,7 +44,7 @@ class _PokemonList extends ConsumerState<PokemonList> {
             controller: _scrollController,
             padding: .all(12),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
+              crossAxisCount: 5,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               childAspectRatio: 0.8,

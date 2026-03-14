@@ -75,7 +75,7 @@ class _AnimatedCard extends ConsumerState<AnimatedCard>
                   )
                 : FrontCard(
                     image: widget.pokemonImage,
-                    number: widget.index.toString(),
+                    name: widget.pokemonName,
                   ),
           );
         },
