@@ -11,10 +11,3 @@ A Flutter-based Pokedex app that utilizes the [PokeAPI](https://pokeapi.co/docs/
 - Display Pokémon data including **name**, **number**, and **image** in card format  
 - Tap on a card to **flip** and reveal additional details
 
-## 🧩 Tech Stack
-- Clean Architecture
-- Riverpod
-
-## 📌 Notes
-- This project was created as a practice app to explore flutter clean architecture and riverpod.
-- Flutter version: 3.35.1
