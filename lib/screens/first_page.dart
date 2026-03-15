@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex_riverpod/screens/list_page.dart';
+import 'package:pokedex_riverpod/screens/widgets/search_bar.dart';
 
 class FirstPage extends StatelessWidget {
   const FirstPage({super.key});
@@ -13,25 +14,15 @@ class FirstPage extends StatelessWidget {
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
             builder: (context) {
-              return Column(
-                crossAxisAlignment: .stretch,
-                children: [
-                  Container(
-                    color: Colors.red,
-                    padding: const .all(16),
-                    child: Text(
-                      'POKEDEX',
-                      style: GoogleFonts.bitcountPropDouble(
-                        fontSize: 70,
-                        fontWeight: .bold,
-                        color: Colors.white,
-                        decoration: .none,
-                      ),
-                      textAlign: .center,
-                    ),
-                  ),
-                  PokemonList(),
-                ],
+              return Scaffold(
+                backgroundColor: Colors.red,
+                body: Column(
+                  children: [
+                    LogoSection(onTap: () => Navigator.of(context).pop()),
+                    Padding(padding: const .all(16), child: PokemonSearchBar()),
+                    PokemonList(),
+                  ],
+                ),
               );
             },
           ),

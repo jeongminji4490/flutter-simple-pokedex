@@ -10,14 +10,18 @@ final isFrontProvider = StateProvider.family<bool, int>((ref, index) => true);
 
 class AnimatedCard extends ConsumerStatefulWidget {
   final int index;
-  final String pokemonName;
-  final String pokemonImage;
+  final String name;
+  final String image;
+  final String types;
+  final String abilities;
 
   const AnimatedCard({
     super.key,
     required this.index,
-    required this.pokemonName,
-    required this.pokemonImage,
+    required this.name,
+    required this.image,
+    required this.types,
+    required this.abilities,
   });
 
   @override
@@ -71,11 +75,13 @@ class _AnimatedCard extends ConsumerState<AnimatedCard>
                 ? Transform(
                     alignment: .center,
                     transform: .identity()..rotateY(pi),
-                    child: BackCard(name: widget.pokemonName),
+                    child: BackCard(name: widget.name),
                   )
                 : FrontCard(
-                    image: widget.pokemonImage,
-                    name: widget.pokemonName,
+                    image: widget.image,
+                    name: widget.name,
+                    types: widget.types,
+                    abilities: widget.abilities,
                   ),
           );
         },

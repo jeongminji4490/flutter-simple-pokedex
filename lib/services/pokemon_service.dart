@@ -7,8 +7,10 @@ class PokemonService {
 
   const PokemonService({required this.dio});
 
-  Future<PokemonDetailResponse> getPokemonImage(int id) async {
-    final response = await dio.get('https://pokeapi.co/api/v2/pokemon/$id');
+  Future<PokemonDetailResponse> getPokemonImage({int? id, String? name}) async {
+    final response = await dio.get(
+      'https://pokeapi.co/api/v2/pokemon/${id ?? name}',
+    );
     return PokemonDetailResponse.fromJson(response.data);
   }
 }
@@ -18,10 +20,10 @@ class PokemonRepository {
 
   const PokemonRepository({required this.service});
 
-  Future<Pokemon> getPokemon(int id) async {
-    final response = await service.getPokemonImage(id);
+  Future<Pokemon> getPokemon({int? id, String? name}) async {
+    final response = await service.getPokemonImage(id: id, name: name);
     return Pokemon(
-      name: response.form.name,
+      name: response.name,
       image: response
           .sprites
           .versions
@@ -29,6 +31,8 @@ class PokemonRepository {
           .blackWhite
           .animated
           .frontDefault,
+      types: response.types.map((type) => type.name).join(', '),
+      abilities: response.abilities.map((ability) => ability.name).join(', '),
     );
   }
 }

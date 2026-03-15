@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokedex_riverpod/services/pokemon_service.dart';
@@ -13,23 +15,45 @@ final pokemonRepositoryProvider = Provider(
   (ref) => PokemonRepository(service: ref.watch(serviceProvider)),
 );
 
-final pokemonDetailProvider = FutureProvider.family<Pokemon, int>((
-  ref,
-  id,
-) async {
-  final repository = ref.watch(pokemonRepositoryProvider);
-  return repository.getPokemon(id);
-});
+class PokemonState {
+  final List<Pokemon>? pokemonList;
 
-final pokemonListProvider = FutureProvider.family<List<Pokemon>, int>((
-  ref,
-  count,
-) async {
-  final repo = ref.watch(pokemonRepositoryProvider);
+  const PokemonState({this.pokemonList});
+}
 
-  final results = await Future.wait(
-    List.generate(count, (i) => repo.getPokemon(i + 1)),
-  );
+final pokemonNotifier =
+    AsyncNotifierProvider.autoDispose<PokemonNotifier, PokemonState>(
+      () => PokemonNotifier(),
+    );
 
-  return results;
-});
+class PokemonNotifier extends AsyncNotifier<PokemonState> {
+  @override
+  Future<PokemonState> build() async {
+    return const PokemonState(pokemonList: []);
+  }
+
+  Future<void> searchPokemon(String name) async {
+    if (name.isEmpty) {
+      loadPokemons(20);
+      return;
+    }
+    state = await AsyncValue.guard(() async {
+      final pokemon = await ref
+          .read(pokemonRepositoryProvider)
+          .getPokemon(name: name);
+      return PokemonState(pokemonList: [pokemon]);
+    });
+  }
+
+  Future<void> loadPokemons(int count) async {
+    state = await AsyncValue.guard(() async {
+      final list = await Future.wait(
+        List.generate(
+          count,
+          (i) => ref.read(pokemonRepositoryProvider).getPokemon(id: i + 1),
+        ),
+      );
+      return PokemonState(pokemonList: list);
+    });
+  }
+}

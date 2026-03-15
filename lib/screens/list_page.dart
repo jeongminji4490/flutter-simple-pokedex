@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex_riverpod/screens/widgets/animated_card.dart';
 import 'package:pokedex_riverpod/providers/pokemon_provider.dart';
 
@@ -16,13 +17,15 @@ class _PokemonList extends ConsumerState<PokemonList> {
 
   @override
   void initState() {
-    super.initState();
+    Future.delayed(Duration(milliseconds: 500), () {
+      ref.read(pokemonNotifier.notifier).loadPokemons(itemCount);
+    });
 
     _scrollController.addListener(() async {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
         final newCount = itemCount + 20;
-        await ref.read(pokemonListProvider(newCount).future);
+        await ref.read(pokemonNotifier.notifier).loadPokemons(newCount);
         if (mounted) {
           setState(() {
             itemCount = newCount;
@@ -30,17 +33,18 @@ class _PokemonList extends ConsumerState<PokemonList> {
         }
       }
     });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final asyncPokemon = ref.watch(pokemonListProvider(itemCount));
-
+    final asyncPokemon = ref.watch(pokemonNotifier);
+    asyncPokemon;
     return Expanded(
       child: Container(
         color: Colors.red,
         child: asyncPokemon.when(
-          data: (pokemon) => GridView.builder(
+          data: (state) => GridView.builder(
             controller: _scrollController,
             padding: .all(12),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -49,23 +53,22 @@ class _PokemonList extends ConsumerState<PokemonList> {
               crossAxisSpacing: 10,
               childAspectRatio: 0.8,
             ),
-            itemCount: pokemon.length,
+            itemCount: state.pokemonList?.length ?? 0,
             itemBuilder: (context, index) {
-              final pokemonName = pokemon[index].name;
-              final pokemonImage = pokemon[index].image;
+              final name = state.pokemonList?[index].name ?? '';
+              final image = state.pokemonList?[index].image ?? '';
+              final types = state.pokemonList?[index].types ?? '';
+              final abilities = state.pokemonList?[index].abilities ?? '';
               return AnimatedCard(
                 index: index,
-                pokemonName: pokemonName,
-                pokemonImage: pokemonImage,
+                name: name,
+                image: image,
+                types: types,
+                abilities: abilities,
               );
             },
           ),
-          error: (e, _) => Center(
-            child: Text(
-              'Error: $e',
-              style: const TextStyle(color: Colors.black),
-            ),
-          ),
+          error: (e, _) => Center(child: NoResultWidget()),
           loading: () => const Center(
             child: CircularProgressIndicator(color: Colors.white),
           ),
@@ -79,4 +82,27 @@ class _PokemonList extends ConsumerState<PokemonList> {
     _scrollController.dispose();
     super.dispose();
   }
+}
+
+class NoResultWidget extends StatelessWidget {
+  const NoResultWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) => Column(
+    mainAxisAlignment: .center,
+    children: [
+      const SizedBox(height: 20),
+      Image.asset('assets/snorlax.gif', width: 200, height: 200),
+      const SizedBox(height: 20),
+      Text(
+        'No results found',
+        style: GoogleFonts.bitcountPropDouble(
+          fontSize: 50,
+          fontWeight: .normal,
+          color: Colors.black,
+          decoration: .none,
+        ),
+      ),
+    ],
+  );
 }

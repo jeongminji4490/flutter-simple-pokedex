@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pokedex_riverpod/screens/widgets/info_bubble.dart';
 
 class FrontCard extends StatefulWidget {
-  const FrontCard({super.key, required this.image, required this.name});
+  const FrontCard({
+    super.key,
+    required this.image,
+    required this.name,
+    required this.types,
+    required this.abilities,
+  });
 
   final String image;
   final String name;
+  final String types;
+  final String abilities;
 
   @override
   State<StatefulWidget> createState() => _FrontCard();
@@ -47,7 +56,15 @@ class _FrontCard extends State<FrontCard> {
                 mainAxisAlignment: .center,
                 children: [
                   const SizedBox(height: 10),
-                  Flexible(child: Image.network(widget.image)),
+                  Flexible(
+                    child: PokemonInfoBubble(
+                      messages: [
+                        'Type: ${widget.types}',
+                        'Abilities: ${widget.abilities}',
+                      ],
+                      child: Image.network(widget.image),
+                    ),
+                  ),
                   const SizedBox(height: 10),
                 ],
               ),
