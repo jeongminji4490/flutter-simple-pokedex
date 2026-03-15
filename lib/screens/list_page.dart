@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex_riverpod/screens/widgets/animated_card.dart';
 import 'package:pokedex_riverpod/providers/pokemon_provider.dart';
+import 'package:pokedex_riverpod/screens/widgets/shimmer.dart';
 
 class PokemonList extends ConsumerStatefulWidget {
   const PokemonList({super.key});
@@ -69,8 +70,17 @@ class _PokemonList extends ConsumerState<PokemonList> {
             },
           ),
           error: (e, _) => Center(child: NoResultWidget()),
-          loading: () => const Center(
-            child: CircularProgressIndicator(color: Colors.white),
+          loading: () => GridView.builder(
+            controller: _scrollController,
+            padding: const EdgeInsets.all(12),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 5,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              childAspectRatio: 0.8,
+            ),
+            itemCount: 20,
+            itemBuilder: (context, index) => const PokemonSkeleton(),
           ),
         ),
       ),

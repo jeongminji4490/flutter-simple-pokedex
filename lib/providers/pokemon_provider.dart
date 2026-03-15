@@ -37,6 +37,7 @@ class PokemonNotifier extends AsyncNotifier<PokemonState> {
       loadPokemons(20);
       return;
     }
+    state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final pokemon = await ref
           .read(pokemonRepositoryProvider)
@@ -46,6 +47,7 @@ class PokemonNotifier extends AsyncNotifier<PokemonState> {
   }
 
   Future<void> loadPokemons(int count) async {
+    state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final list = await Future.wait(
         List.generate(
