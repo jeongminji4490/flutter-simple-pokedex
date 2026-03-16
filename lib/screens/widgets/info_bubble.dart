@@ -37,7 +37,7 @@ class _PokemonInfoBubbleState extends State<PokemonInfoBubble> {
           child: Material(
             color: Colors.transparent,
             child: CustomPaint(
-              painter: BubblePainter(),
+              painter: _BubblePainter(),
               child: Padding(
                 padding: const .fromLTRB(12, 12, 12, 22),
                 child: Column(
@@ -83,7 +83,7 @@ class _PokemonInfoBubbleState extends State<PokemonInfoBubble> {
   }
 }
 
-class BubblePainter extends CustomPainter {
+class _BubblePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()

@@ -29,7 +29,13 @@ final pokemonNotifier =
 class PokemonNotifier extends AsyncNotifier<PokemonState> {
   @override
   Future<PokemonState> build() async {
-    return const PokemonState(pokemonList: []);
+    final result = await Future.wait(
+      List.generate(
+        20,
+        (i) => ref.read(pokemonRepositoryProvider).getPokemon(id: i + 1),
+      ),
+    );
+    return PokemonState(pokemonList: result);
   }
 
   Future<void> searchPokemon(String name) async {

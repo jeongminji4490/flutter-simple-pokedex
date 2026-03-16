@@ -47,12 +47,6 @@ class _SearchBarState extends ConsumerState<PokemonSearchBar> {
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
               ],
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter a Pokemon name';
-                }
-                return null;
-              },
             ),
           ),
         ),

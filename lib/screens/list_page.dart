@@ -18,10 +18,6 @@ class _PokemonList extends ConsumerState<PokemonList> {
 
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: 500), () {
-      ref.read(pokemonNotifier.notifier).loadPokemons(itemCount);
-    });
-
     _scrollController.addListener(() async {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
@@ -40,7 +36,6 @@ class _PokemonList extends ConsumerState<PokemonList> {
   @override
   Widget build(BuildContext context) {
     final asyncPokemon = ref.watch(pokemonNotifier);
-    asyncPokemon;
     return Expanded(
       child: Container(
         color: Colors.red,
@@ -69,10 +64,10 @@ class _PokemonList extends ConsumerState<PokemonList> {
               );
             },
           ),
-          error: (e, _) => Center(child: NoResultWidget()),
+          error: (e, _) => Center(child: _NoResultWidget()),
           loading: () => GridView.builder(
             controller: _scrollController,
-            padding: const EdgeInsets.all(12),
+            padding: const .all(12),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
               mainAxisSpacing: 10,
@@ -94,8 +89,8 @@ class _PokemonList extends ConsumerState<PokemonList> {
   }
 }
 
-class NoResultWidget extends StatelessWidget {
-  const NoResultWidget({super.key});
+class _NoResultWidget extends StatelessWidget {
+  const _NoResultWidget();
 
   @override
   Widget build(BuildContext context) => Column(

@@ -10,7 +10,7 @@ class FirstPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.red,
-      body: LogoSection(
+      body: _LogoSection(
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
             builder: (context) {
@@ -18,7 +18,7 @@ class FirstPage extends StatelessWidget {
                 backgroundColor: Colors.red,
                 body: Column(
                   children: [
-                    LogoSection(onTap: () => Navigator.of(context).pop()),
+                    _LogoSection(onTap: () => Navigator.of(context).pop()),
                     Padding(padding: const .all(16), child: PokemonSearchBar()),
                     PokemonList(),
                   ],
@@ -32,8 +32,8 @@ class FirstPage extends StatelessWidget {
   }
 }
 
-class LogoSection extends StatelessWidget {
-  const LogoSection({super.key, this.onTap});
+class _LogoSection extends StatelessWidget {
+  const _LogoSection({this.onTap});
 
   final VoidCallback? onTap;
 
