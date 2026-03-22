@@ -24,7 +24,7 @@ class _PokemonInfoBubbleState extends State<PokemonInfoBubble> {
 
   void _showBubble() {
     _overlayEntry = _createOverlayEntry();
-    Overlay.of(context).insert(_overlayEntry!);
+    if (context.mounted) Overlay.of(context).insert(_overlayEntry!);
   }
 
   OverlayEntry _createOverlayEntry() {

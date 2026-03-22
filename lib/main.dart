@@ -11,6 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Pokedex', home: const FirstPage());
+    return MaterialApp(
+      title: 'Pokedex',
+      debugShowCheckedModeBanner: false,
+      home: const FirstPage(),
+    );
   }
 }
