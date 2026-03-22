@@ -34,3 +34,4 @@ A Flutter-based Pokedex web page that utilizes the [PokeAPI](https://pokeapi.co/
 - **State Management**: Riverpod
 - **HTTP Client**: Dio
 - **API**: [PokéAPI](https://pokeapi.co/)
+- **Web Hostring**: http://minji-pokedex-flutter-web.s3-website-ap-southeast-2.amazonaws.com/
