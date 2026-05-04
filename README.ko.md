@@ -11,29 +11,32 @@
 ![Screen Recording 2026-03-22 at 6 48 55 PM](https://github.com/user-attachments/assets/00a2aba1-00c0-4c3c-becc-306ba576e7b7)
 
 
-# 🗳️ Pokedex (PokéAPI Service)
-A Flutter-based web service that provides Pokémon information with interactive UI features such as card flipping and hover effects, powered by PokéAPI.
+# Pokedex
+PokéAPI를 활용하여 포켓몬 정보를 조회하고, 카드 뒤집기 및 hover 인터렉션 UI를 제공하는 Flutter 기반 웹 서비스
 
-[![Language](https://img.shields.io/badge/language-Korean-blue.svg)](./README.ko.md)
+[![Language](https://img.shields.io/badge/language-English-green.svg)](./README.md)
 
-## 📌 Project Overview
-*   **Goal**: To master **Riverpod**, a powerful state management library for Flutter, and to gain hands-on experience with **AWS-based deployment**.
-*   **Development Period**: 1 Week
-*   **Live Demo**: [View Website](http://minji-pokedex-flutter-web.s3-website-ap-southeast-2.amazonaws.com/)
 
-## ✨ Key Features
 
-### 1. Pokémon List
-*   Displays up to 20 Pokémon cards per page.
-*   **Hover Interaction**: Shows detailed information (types, stats, etc.) in a tooltip overlay when hovering over a card.
-*   **Card Flip Animation**: Interactive card-flipping effect triggered on click.
+## 📌 프로젝트 개요
+*   Flutter의 상태 관리 라이브러리 중 하나인 **Riverpod**에 대해 공부하고, **AWS 기반 배포** 경험이 목적
 
-### 2. Search Functionality
-*   Enables searching for specific Pokémon by name.
+*   **개발 기간**: 1주일
+*   **배포 URL**: http://minji-pokedex-flutter-web.s3-website-ap-southeast-2.amazonaws.com/
 
-## 🛠 Tech Stack
+## ✨ 주요 기능
 
-| Category | Details |
+### 1. 포켓몬 목록
+*   페이지당 최대 20개의 포켓몬 카드 표시
+*   마우스를 올리면 포켓몬의 타입 및 능력치 등의 상세 정보가 말풍선 형태로 오버레이 표시
+*   카드 클릭 시 뒤집히는 애니메이션 효과 적용
+
+### 2. 검색 기능
+*   포켓몬 이름으로 특정 포켓몬 검색 가능
+
+## 🛠 기술 스택
+
+| 분류 | 내용 |
 | :--- | :--- |
 | **Framework** | Flutter 3.41.1 |
 | **State Management** | Riverpod |
@@ -41,21 +44,22 @@ A Flutter-based web service that provides Pokémon information with interactive 
 | **API** | [PokéAPI](https://pokeapi.co/) |
 | **Distribution** | AWS S3 |
 
-### Frontend
-*   **Architecture**: Designed using the **Service / Repository pattern** to ensure clear separation of concerns.
-*   **State Management**: Built with **Riverpod**, utilizing **AsyncNotifier** to handle asynchronous states for Pokémon listing and searching.
-*   **Data Handling**:
-    *   Implemented supplemental API calls by name to fetch detailed data not provided in the basic PokéAPI list.
-    *   Applied **Skeleton Loading UI** for a smoother user experience.
-    *   Implemented **Infinite Scroll UX** using the `next` URL provided by PokéAPI for seamless pagination.
+### 프론트엔드
+*   **Framework**: Flutter
+*   **State Management**: **Riverpod** 기반 설계, **AsyncNotifier**를 활용하여 포켓몬 목록/검색 등의 비동기 상태 관리
+*   **Architecture**: **Service / Repository 패턴** 기반 아키텍처 설계로 관심사 분리
+*   **Data Handling**: 
+    *   PokéAPI의 리스트 API에서 상세 정보가 제공되지 않는 구조를 보완하기 위해, name 기반 추가 API 호출로 상세 데이터 구성
+    *   **Skeleton loading UI** 적용
+    *   PokéAPI의 `next` URL을 활용한 스크롤 기반 페이지네이션 구현 및 무한 스크롤 UX 적용
 
-### Deployment
-*   **AWS S3**: Hosted as a static website.
+### 배포
+*   **AWS S3**: 정적 웹사이트 형태로 배포 및 호스팅
 
-## 🔍 Troubleshooting
+## 🔍 트러블슈팅
 
-### Optimizing Pagination State Management
-*   **Issue**: Initially, pagination was implemented by detecting scroll-to-bottom events in the widget, manually incrementing an `itemCount`, and requesting more data based on that count.
-*   **Problem Encountered**: This led to the UI layer directly managing the state of the data count. It caused a fragmentation of state management responsibilities and tightly coupled the business logic with the UI logic.
-*   **Resolution**: Improved the structure by leveraging the `next` URL provided by the API, removing the need for the UI to calculate the item count.
-*   **Result**: The UI now solely focuses on subscribing to the state. By clearly separating the data logic from the UI logic, the maintainability and scalability of the code were significantly improved.
+### 페이지네이션 상태 관리 구조 개선
+*   **문제 상황**: 초기에는 스크롤이 페이지 하단에 도달 시 이벤트를 감지하여 위젯에서 `itemCount`를 직접 증가시키고, 증가된 count 값을 기반으로 추가 데이터를 요청하는 방식으로 페이지네이션 구현
+*   **발생한 문제**: UI 레이어에서 데이터 개수 상태를 직접 관리하게 되어 상태 관리 책임이 분산되고, 비즈니스 로직과 UI 로직이 결합되는 문제 발생
+*   **해결 방법**: API에서 제공하는 `next` URL을 활용하여 UI에서 count를 직접 계산하지 않도록 개선
+*   **결과**: UI는 단순히 상태를 구독하는 역할만 담당하게 되었고, 데이터 로직과 UI 로직이 명확히 분리되어 코드의 유지보수성과 확장성 향상
