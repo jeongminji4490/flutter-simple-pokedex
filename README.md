@@ -11,15 +11,16 @@
 ![Screen Recording 2026-03-22 at 6 48 55 PM](https://github.com/user-attachments/assets/00a2aba1-00c0-4c3c-becc-306ba576e7b7)
 
 
-# 🗳️ Pokedex (PokéAPI Service)
+# Pokedex
 A Flutter-based web service that provides Pokémon information with interactive UI features such as card flipping and hover effects, powered by PokéAPI.
 
 [![Language](https://img.shields.io/badge/language-Korean-blue.svg)](./README.ko.md)
 
 ## 📌 Project Overview
-*   **Goal**: To master **Riverpod**, a powerful state management library for Flutter, and to gain hands-on experience with **AWS-based deployment**.
+*   To master **Riverpod**, a powerful state management library for Flutter, and to gain hands-on experience with **AWS-based deployment**.
+
 *   **Development Period**: 1 Week
-*   **Live Demo**: [View Website](http://minji-pokedex-flutter-web.s3-website-ap-southeast-2.amazonaws.com/)
+*   **URL**: [View Website](http://minji-pokedex-flutter-web.s3-website-ap-southeast-2.amazonaws.com/)
 
 ## ✨ Key Features
 

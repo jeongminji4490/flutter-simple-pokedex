@@ -22,7 +22,7 @@ PokéAPI를 활용하여 포켓몬 정보를 조회하고, 카드 뒤집기 및 
 *   Flutter의 상태 관리 라이브러리 중 하나인 **Riverpod**에 대해 공부하고, **AWS 기반 배포** 경험이 목적
 
 *   **개발 기간**: 1주일
-*   **배포 URL**: http://minji-pokedex-flutter-web.s3-website-ap-southeast-2.amazonaws.com/
+*   **배포 URL**: [View Website](http://minji-pokedex-flutter-web.s3-website-ap-southeast-2.amazonaws.com/)
 
 ## ✨ 주요 기능
 
