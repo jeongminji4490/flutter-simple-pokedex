@@ -32,12 +32,18 @@ class PokemonNotifier extends AsyncNotifier<PokemonState> {
   }
 
   Future<void> loadPokemons() async {
+    if (state.isLoading) return;
+
     final currentState = state.value;
+    final nextUrl = currentState?.nextUrl;
+
+    // Disable infinite scroll when searching pokemon (nextUrl == null)
+    if (nextUrl == null) return;
 
     state = await AsyncValue.guard(() async {
       final response = await ref
           .read(serviceProvider)
-          .getPokemons(url: currentState?.nextUrl);
+          .getPokemons(url: nextUrl);
 
       final newList = await Future.wait(
         response.results.map(
@@ -55,8 +61,7 @@ class PokemonNotifier extends AsyncNotifier<PokemonState> {
 
   Future<void> searchPokemon(String name) async {
     if (name.isEmpty) {
-      state = const AsyncValue.loading();
-      loadPokemons();
+      await resetPokemons();
       return;
     }
     state = const AsyncValue.loading();
@@ -64,10 +69,21 @@ class PokemonNotifier extends AsyncNotifier<PokemonState> {
       final pokemon = await ref
           .read(pokemonRepositoryProvider)
           .getPokemonDetail(name);
+      return PokemonState(pokemonList: [pokemon], nextUrl: null);
+    });
+  }
 
-      if (!ref.mounted) return state.value!;
-
-      return PokemonState(pokemonList: [pokemon]);
+  Future<void> resetPokemons() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final response = await ref.read(serviceProvider).getPokemons();
+      final pokemonList = await Future.wait(
+        response.results.map(
+          (result) =>
+              ref.read(pokemonRepositoryProvider).getPokemonDetail(result.name),
+        ),
+      );
+      return PokemonState(pokemonList: pokemonList, nextUrl: response.next);
     });
   }
 }

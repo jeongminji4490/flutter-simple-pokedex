@@ -28,12 +28,25 @@ class _PokemonInfoBubbleState extends State<PokemonInfoBubble> {
   }
 
   OverlayEntry _createOverlayEntry() {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Reduce the bubble width more aggressively on mobile devices.
+    double bubbleWidth = screenWidth < 600 ? 160.0 : 200.0;
+
+    // For smaller mobile screens
+    if (bubbleWidth > screenWidth * 0.8) {
+      bubbleWidth = screenWidth * 0.8;
+    }
+
+    // Calculate the horizontal offset to center the bubble above the card
+    double dx = -(bubbleWidth / 2) + 20;
+
     return OverlayEntry(
       builder: (context) => Positioned(
-        width: 200,
+        width: bubbleWidth,
         child: CompositedTransformFollower(
           link: _layerLink,
-          offset: const Offset(-85, -120),
+          offset: Offset(dx, -120),
           child: Material(
             color: Colors.transparent,
             child: CustomPaint(
@@ -73,13 +86,21 @@ class _PokemonInfoBubbleState extends State<PokemonInfoBubble> {
           _timer = Timer(const Duration(milliseconds: 500), _showBubble);
         },
         onExit: (_) {
-          _timer?.cancel();
-          _overlayEntry?.remove();
-          _overlayEntry = null;
+          _stopTimerAndHide();
         },
-        child: widget.child,
+        child: GestureDetector(
+          onLongPress: _showBubble,
+          onLongPressUp: _stopTimerAndHide,
+          child: widget.child,
+        ),
       ),
     );
+  }
+
+  void _stopTimerAndHide() {
+    _timer?.cancel();
+    _overlayEntry?.remove();
+    _overlayEntry = null;
   }
 }
 

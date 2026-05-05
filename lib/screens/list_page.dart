@@ -21,6 +21,9 @@ class _PokemonList extends ConsumerState<PokemonList> {
     _scrollController.addListener(() async {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent) {
+        final asyncState = ref.read(pokemonNotifier);
+        if (asyncState.isLoading) return;
+        if (asyncState.value?.nextUrl == null) return;
         await ref.read(pokemonNotifier.notifier).loadPokemons();
       }
     });
