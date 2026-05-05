@@ -8,6 +8,10 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch and decode the image into memory before the widget is painted.
+    // This compensates for network latency in the Flutter Web CanvasKit/HTML renderer.
+    precacheImage(const AssetImage('assets/pokedex_card.png'), context);
+
     return Scaffold(
       backgroundColor: Colors.red,
       body: _LogoSection(

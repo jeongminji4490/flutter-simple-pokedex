@@ -31,14 +31,16 @@ class _FrontCard extends State<FrontCard> {
       ),
       child: Column(
         children: [
-          Expanded(
+          Flexible(
             child: Container(
               color: Color(0xFF0C1670),
-              child: Center(
+              alignment: Alignment.center,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
                 child: Text(
                   widget.name.toUpperCase(),
                   style: GoogleFonts.bitcountPropDouble(
-                    fontSize: 30,
+                    fontSize: 20,
                     fontWeight: .bold,
                     color: Colors.white,
                     decoration: .none,
