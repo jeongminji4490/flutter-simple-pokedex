@@ -64,6 +64,9 @@ class PokemonNotifier extends AsyncNotifier<PokemonState> {
       final pokemon = await ref
           .read(pokemonRepositoryProvider)
           .getPokemonDetail(name);
+
+      if (!ref.mounted) return state.value!;
+
       return PokemonState(pokemonList: [pokemon]);
     });
   }

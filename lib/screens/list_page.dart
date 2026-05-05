@@ -33,44 +33,50 @@ class _PokemonList extends ConsumerState<PokemonList> {
     return Expanded(
       child: Container(
         color: Colors.red,
-        child: asyncPokemon.when(
-          data: (state) => GridView.builder(
-            controller: _scrollController,
-            padding: .all(12),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            int crossAxisCount = 2;
+            if (constraints.maxWidth > 1200) {
+              crossAxisCount = 5;
+            } else if (constraints.maxWidth > 800) {
+              crossAxisCount = 4;
+            } else if (constraints.maxWidth > 500) {
+              crossAxisCount = 3;
+            }
+
+            final gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: crossAxisCount,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
               childAspectRatio: 0.8,
-            ),
-            itemCount: state.pokemonList?.length ?? 0,
-            itemBuilder: (context, index) {
-              final name = state.pokemonList?[index].name ?? '';
-              final image = state.pokemonList?[index].image ?? '';
-              final types = state.pokemonList?[index].types ?? '';
-              final abilities = state.pokemonList?[index].abilities ?? '';
-              return AnimatedCard(
-                index: index,
-                name: name,
-                image: image,
-                types: types,
-                abilities: abilities,
-              );
-            },
-          ),
-          error: (e, _) => Center(child: _NoResultWidget()),
-          loading: () => GridView.builder(
-            controller: _scrollController,
-            padding: const .all(12),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              childAspectRatio: 0.8,
-            ),
-            itemCount: 20,
-            itemBuilder: (context, index) => const PokemonSkeleton(),
-          ),
+            );
+
+            return asyncPokemon.when(
+              data: (state) => GridView.builder(
+                controller: _scrollController,
+                padding: const EdgeInsets.all(12),
+                gridDelegate: gridDelegate,
+                itemCount: state.pokemonList?.length ?? 0,
+                itemBuilder: (context, index) {
+                  final pokemon = state.pokemonList![index];
+                  return AnimatedCard(
+                    index: index,
+                    name: pokemon.name,
+                    image: pokemon.image,
+                    types: pokemon.types,
+                    abilities: pokemon.abilities,
+                  );
+                },
+              ),
+              loading: () => GridView.builder(
+                padding: const EdgeInsets.all(12),
+                gridDelegate: gridDelegate,
+                itemCount: 20,
+                itemBuilder: (context, index) => const PokemonSkeleton(),
+              ),
+              error: (e, _) => Center(child: _NoResultWidget()),
+            );
+          },
         ),
       ),
     );

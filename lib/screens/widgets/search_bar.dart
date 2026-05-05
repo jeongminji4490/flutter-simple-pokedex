@@ -44,9 +44,6 @@ class _SearchBarState extends ConsumerState<PokemonSearchBar> {
                 border: .none,
                 contentPadding: .symmetric(horizontal: 12, vertical: 8),
               ),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
-              ],
             ),
           ),
         ),
